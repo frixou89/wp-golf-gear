@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: Golf Calculator
- * Description: Find the right mpastouni for you
+ * Description: Golf Calculator Plugin
  * Version: 1.0.0
  * Author: Marios Frixou
  * Author URI: http://mariosfrixou.me
- * Requires at least: 4.0.0
- * Tested up to: 4.0.0
+ * Requires at least: 4.5.1
+ * Tested up to: 4.5.1
  *
  * Text Domain: golfcp
  * Domain Path: /languages/
@@ -118,6 +118,7 @@ final class Golf_Calculator {
 		}
 		// Admin - End
 		require_once( 'golf-calculator-shortcodes.php' );
+		require_once( 'widget.php' );
 
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
 
@@ -156,7 +157,7 @@ final class Golf_Calculator {
 		wp_enqueue_script( 'jquery' );
 
 		// Register the script
-		wp_register_script( 'data_club_length_handle', plugin_dir_url( __FILE__ ) . 'js/golf-calculator.js' );
+		wp_register_script( 'data_club_length_handle', plugin_dir_url( __FILE__ ) . 'js/golf-calculator.js', array('jquery'));
 
 		// Localize the script with new data
 		$club_length = array(
@@ -165,7 +166,7 @@ final class Golf_Calculator {
 		wp_localize_script( 'data_club_length_handle', 'data_club_length', $club_length );
 
 		// Enqueued script with localized data.
-		wp_enqueue_script( 'data_club_length_handle' );
+		wp_enqueue_script( 'data_club_length_handle', array('jquery') );
 	} 
 
 	/**
