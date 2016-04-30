@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: Golf Calculator
- * Description: Find the mpastouni for you
+ * Description: Find the right mpastouni for you
  * Version: 1.0.0
  * Author: Marios Frixou
  * Author URI: http://mariosfrixou.me
@@ -89,14 +89,6 @@ final class Golf_Calculator {
 	 */
 	public $admin;
 
-	/**
-	 * The settings object.
-	 * @var     object
-	 * @access  public
-	 * @since   1.0.0
-	 */
-	public $settings;
-	// Admin - End
 
 	// Post Types - Start
 	/**
@@ -119,23 +111,14 @@ final class Golf_Calculator {
 		$this->version 			= '1.0.0';
 
 		// Admin - Start
-		require_once( 'classes/class-golf-calculator-settings.php' );
-			$this->settings = Golf_Calculator_Settings::instance();
 
 		if ( is_admin() ) {
 			require_once( 'classes/class-golf-calculator-admin.php' );
 			$this->admin = Golf_Calculator_Admin::instance();
 		}
 		// Admin - End
-
-		// Post Types - Start
-		require_once( 'classes/class-golf-calculator-post-type.php' );
-		require_once( 'classes/class-golf-calculator-taxonomy.php' );
 		require_once( 'golf-calculator-shortcodes.php' );
 
-		// Register an example post type. To register other post types, duplicate this line.
-		$this->post_types['thing'] = new Golf_Calculator_Post_Type( 'thing', __( 'Thing', 'golfcp' ), __( 'Things', 'golfcp' ), array( 'menu_icon' => 'dashicons-flag' ) );
-		// Post Types - End
 		register_activation_hook( __FILE__, array( $this, 'install' ) );
 
 		add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
@@ -169,6 +152,20 @@ final class Golf_Calculator {
 
 	public function load_assets() {
 		wp_enqueue_style( 'golf-calculator', plugin_dir_url( __FILE__ ) . 'css/golf-calculator.css', array(), $this->version, 'all' );
+
+		wp_enqueue_script( 'jquery' );
+
+		// Register the script
+		wp_register_script( 'data_club_length_handle', plugin_dir_url( __FILE__ ) . 'js/golf-calculator.js' );
+
+		// Localize the script with new data
+		$club_length = array(
+			'url' => plugin_dir_url( __FILE__ ) . 'data/club-length.json',
+		);
+		wp_localize_script( 'data_club_length_handle', 'data_club_length', $club_length );
+
+		// Enqueued script with localized data.
+		wp_enqueue_script( 'data_club_length_handle' );
 	} 
 
 	/**

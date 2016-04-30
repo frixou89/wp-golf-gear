@@ -1,0 +1,12 @@
+@import url(https://fonts.googleapis.com/css?family=Merriweather:400,300,700);
+
+.wp-golfcp button,
+.wp-golfcp input,
+.wp-golfcp select,
+.wp-golfcp textarea {
+	color: #1a1a1a;
+	font-family: Merriweather, Georgia, serif;
+	font-size: 16px;
+	font-size: 1rem;
+	line-height: 1.75;
+}

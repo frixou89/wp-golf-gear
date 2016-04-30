@@ -33,9 +33,6 @@ final class Golf_Calculator_Admin {
 	 * @since   1.0.0
 	 */
 	public function __construct () {
-		// Register the settings with WordPress.
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
-
 		// Register the settings screen within WordPress.
 		add_action( 'admin_menu', array( $this, 'register_settings_screen' ) );
 	} // End __construct()
@@ -73,20 +70,10 @@ final class Golf_Calculator_Admin {
 	 */
 	public function settings_screen () {
 		global $title;
-		$sections = Golf_Calculator()->settings->get_settings_sections();
-		$tab = $this->_get_current_tab( $sections );
 		?>
 		<div class="wrap golf-calculator-wrap">
-			<?php
-				echo $this->get_admin_header_html( $sections, $title );
-			?>
-			<form action="options.php" method="post">
-				<?php
-					settings_fields( 'golf-calculator-settings-' . $tab );
-					do_settings_sections( 'golf-calculator-' . $tab );
-					submit_button( __( 'Save Changes', 'golf-calculator' ) );
-				?>
-			</form>
+		<p>Use this shortcode to get the form</p>
+			<code>[golfcp]</code>
 		</div><!--/.wrap-->
 		<?php
 	} // End settings_screen()
